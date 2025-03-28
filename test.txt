@@ -1,1 +1,29 @@
-test test
+@echo off
+cd /d "%~dp0"
+
+:: Log-Datei definieren (gleicher Ordner wie das Skript)
+set LOGFILE=%~dp0sync_log.txt
+
+:: Startzeit ins Log schreiben
+echo [%DATE% %TIME%] --- Sync gestartet --- >> %LOGFILE%
+
+:: Pull aus GitHub
+echo Pulling latest changes... >> %LOGFILE%
+git pull origin main >> %LOGFILE% 2>&1
+
+:: Änderungen hinzufügen
+echo Adding new changes... >> %LOGFILE%
+git add . >> %LOGFILE% 2>&1
+
+:: Commit mit Datum und Uhrzeit
+set TIMESTAMP=%DATE% %TIME%
+echo Committing changes... >> %LOGFILE%
+git commit -m "Auto-sync commit %TIMESTAMP%" >> %LOGFILE% 2>&1
+
+:: Änderungen pushen
+echo Pushing changes... >> %LOGFILE%
+git push origin main >> %LOGFILE% 2>&1
+
+:: Sync abgeschlossen
+echo [%DATE% %TIME%] --- Sync abgeschlossen --- >> %LOGFILE%
+exit

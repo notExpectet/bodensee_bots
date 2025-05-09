@@ -17,7 +17,7 @@ tHTIRS2 Seeker;
 
 long TorRichtung;
 long Abweichung;
-
+long dribblerini
 long BallRichtung;
 
 void Tor()
@@ -54,6 +54,7 @@ void Tor()
 task main();
 {
 	setMotorSpeed(Dribbler, 100);
+	dribblerini = getMotorRPM(Dribbler);
 
 	// Senorinitialisierung
 	initSensor (&Kompass, KompassPort);
@@ -114,7 +115,7 @@ task main();
 
 		int DribblerS = getMotorRPM(Dribbler);
 
-		if ((DribblerS < 195) && (DribblerS > 150))
+		if ((DribblerS-5 < dribblerini) && (DribblerS+5 > ))
 		{
 			Tor();
 		}

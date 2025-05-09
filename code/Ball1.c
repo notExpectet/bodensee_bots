@@ -6,9 +6,9 @@
 #define KompassPort S4
 #define SeekerPort S3
 
-tHTMC kompass;   // Datenstruktur für Kompass auf Port S1
+tHTMC kompass;   // Datenstruktur fÃ¼r Kompass auf Port S1
 int Torrichtung = 0;
-//long irsensorAlt = 0; // globale Variable für Ballsucher auf Port S4
+//long irsensorAlt = 0; // globale Variable fÃ¼r Ballsucher auf Port S4
 tHTIRS2 irsensor;
 long ballDirection = 0;
 

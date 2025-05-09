@@ -16,7 +16,7 @@
 #define DRIVE_SPEED_FAST_RIGHT 32    // Geradeaus rechts leicht schneller
 #define LOOP_DELAY_MS          50    // Zyklusdauer in ms
 #define DISPLAY_INTERVAL       10    // Display-Update alle n Zyklen
-#define DEADZONE               3     // Toleranz für Tor-Ausrichtung
+#define DEADZONE               3     // Toleranz fÃ¼r Tor-Ausrichtung
 #define CENTER_IR              5     // IR-Mitte
 #define DRIBBLER_RPM_MIN       150   // Untere RPM-Grenze ballbereit
 #define DRIBBLER_RPM_MAX       195   // Obere RPM-Grenze ballbereit

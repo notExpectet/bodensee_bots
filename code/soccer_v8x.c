@@ -37,68 +37,68 @@ float goal_dir; // Tor Richtung
 float dis_r; // Ultraschall Entfernung Rechts
 float dis_l; // Ultraschall Entfernung Links
 
-// ---------------------------------------------------------------------------
-//  alignToHeading()
-//  Richtet den Roboter auf targetHeading aus.
-//  - targetHeading : gewünschter Winkel 0-359°
-//  - driveForward  : false = Drehung auf der Stelle
-//                    true  = während des Drehens vorwärts fahren
-//  - tol           : Winkel-Toleranz für „sauber ausgerichtet“
+//---------------------------------------------------------------------------
+//  alignToHeadingStep()
+//    • targetHeading : gewünschter Winkel 0-359°
+//    • driveForward  : false = Drehung auf der Stelle
+//                      true  = während des Drehens mit motor_speed vorwärts
+//    • tol           : Winkel-Toleranz
 //
-//  Verwendet motor_speed (globale Variable) als Vorwärtsbasis.
-// ---------------------------------------------------------------------------
-void alignToHeading(int targetHeading, bool driveForward = false, int tol = 3)
+//  Rückgabe: true  → Ziel erreicht (innerhalb tol)
+//            false → weiter ausrichten
+//
+//  Die Funktion prüft KEINEN Ballbesitz – das erledigt dein Hauptcode.
+//---------------------------------------------------------------------------
+bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = 3)
 {
     const int maxTurnSpeed = 60;   // maximale Drehgeschwindigkeit
     const int minTurnSpeed = 10;   // minimale Drehgeschwindigkeit
 
-
-    // aktuellen Kurs holen
+    //------------------------ Kursregler (ein Schritt) ---------------------
     readSensor(&Kompass);
-    int curr = Kompass.relativeHeading;      // 0-359°
+    int curr = Kompass.relativeHeading;          // 0-359°
 
-    // kürzesten Winkel­fehler (-180 … +180) berechnen
+    // kürzesten Winkelfehler −180 … +180 berechnen
     int diff = targetHeading - curr;
     if (diff > 180)  diff -= 360;
-        if (diff < -180) diff += 360;
+    if (diff < -180) diff += 360;
 
-        int absDiff = abs(diff);
-        if (absDiff <= tol)                     // Ziel erreicht?
-        {
-            if (driveForward) {
-                setMotorSpeed(motorLinks,  motor_speed);
-                setMotorSpeed(motorRechts, motor_speed);
-            } else {
-                setMotorSpeed(motorLinks,  0);
-                setMotorSpeed(motorRechts, 0);
-            }
-            break;
-        }
-
-        // proportionale Drehgeschwindigkeit
-        int turn = (absDiff * maxTurnSpeed) / 180;   // einfache Kp-Regelung
-        if (turn < minTurnSpeed) turn = minTurnSpeed;
-        if (turn > maxTurnSpeed) turn = maxTurnSpeed;
-
-        if (!driveForward) {
-            // Rotation auf der Stelle
-            setMotorSpeed(motorLinks,  (diff > 0) ?  turn : -turn);
-            setMotorSpeed(motorRechts, (diff > 0) ? -turn :  turn);
+    int absDiff = abs(diff);
+    if (absDiff <= tol) {                        // Ziel erreicht
+        if (driveForward) {
+            setMotorSpeed(motorLinks,  motor_speed);
+            setMotorSpeed(motorRechts, motor_speed);
         } else {
-            // Vorwärts + Drehen mit motor_speed als Basis
-            int left  =  motor_speed + ((diff > 0) ?  turn : -turn);
-            int right =  motor_speed - ((diff > 0) ?  turn : -turn);
-
-            // Begrenzen auf -100…100
-            left  = (left  > 100) ? 100 : (left  < -100 ? -100 : left);
-            right = (right > 100) ? 100 : (right < -100 ? -100 : right);
-
-            setMotorSpeed(motorLinks,  left);
-            setMotorSpeed(motorRechts, right);
+            setMotorSpeed(motorLinks,  0);
+            setMotorSpeed(motorRechts, 0);
         }
+        return true;
+    }
 
-    
+    // proportionale Drehgeschwindigkeit
+    int turn = (absDiff * maxTurnSpeed) / 180;
+    if (turn < minTurnSpeed) turn = minTurnSpeed;
+    if (turn > maxTurnSpeed) turn = maxTurnSpeed;
+
+    if (!driveForward) {
+        // Rotation auf der Stelle
+        setMotorSpeed(motorLinks,  (diff > 0) ?  turn : -turn);
+        setMotorSpeed(motorRechts, (diff > 0) ? -turn :  turn);
+    } else {
+        // Vorwärts + Differenzial-Lenkung
+        int left  =  motor_speed + ((diff > 0) ?  turn : -turn);
+        int right =  motor_speed - ((diff > 0) ?  turn : -turn);
+
+        // Begrenzen auf −100 … +100
+        left  = (left  > 100) ? 100 : (left  < -100 ? -100 : left);
+        right = (right > 100) ? 100 : (right < -100 ? -100 : right);
+
+        setMotorSpeed(motorLinks,  left);
+        setMotorSpeed(motorRechts, right);
+    }
+    return false;                                 // noch nicht im Ziel
 }
+
 
 
 
@@ -132,7 +132,7 @@ task main();
 		{
 			status = 2 // habe Ball
 
-			alignToHeading( , true);
+			alignToHeadingStep()
 			// werte nehmen
 			// Tor Berechnen
 			// auf Tor korregierenw

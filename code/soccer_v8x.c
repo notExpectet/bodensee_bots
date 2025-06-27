@@ -9,7 +9,7 @@
 	This code is intellectual property of Bodensee Bots j.r.t. and is not allowed to be used for commercial purposes.
 	The authors are not responsible for any damage caused by the use of this code.
 	Code created by:  Peer Siems, 2025 / Marlon Jost, 2025
-	Soccerversion 8 (under construction)
+	Soccerversion 8x (under construction)
 */
 
 #include "hitechnic-compass.h"
@@ -36,6 +36,71 @@ int motor_speed = 25;
 float goal_dir; // Tor Richtung
 float dis_r; // Ultraschall Entfernung Rechts
 float dis_l; // Ultraschall Entfernung Links
+
+// ---------------------------------------------------------------------------
+//  alignToHeading()
+//  Richtet den Roboter auf targetHeading aus.
+//  - targetHeading : gewünschter Winkel 0-359°
+//  - driveForward  : false = Drehung auf der Stelle
+//                    true  = während des Drehens vorwärts fahren
+//  - tol           : Winkel-Toleranz für „sauber ausgerichtet“
+//
+//  Verwendet motor_speed (globale Variable) als Vorwärtsbasis.
+// ---------------------------------------------------------------------------
+void alignToHeading(int targetHeading, bool driveForward = false, int tol = 3)
+{
+    const int maxTurnSpeed = 60;   // maximale Drehgeschwindigkeit
+    const int minTurnSpeed = 10;   // minimale Drehgeschwindigkeit
+
+
+    // aktuellen Kurs holen
+    readSensor(&Kompass);
+    int curr = Kompass.relativeHeading;      // 0-359°
+
+    // kürzesten Winkel­fehler (-180 … +180) berechnen
+    int diff = targetHeading - curr;
+    if (diff > 180)  diff -= 360;
+        if (diff < -180) diff += 360;
+
+        int absDiff = abs(diff);
+        if (absDiff <= tol)                     // Ziel erreicht?
+        {
+            if (driveForward) {
+                setMotorSpeed(motorLinks,  motor_speed);
+                setMotorSpeed(motorRechts, motor_speed);
+            } else {
+                setMotorSpeed(motorLinks,  0);
+                setMotorSpeed(motorRechts, 0);
+            }
+            break;
+        }
+
+        // proportionale Drehgeschwindigkeit
+        int turn = (absDiff * maxTurnSpeed) / 180;   // einfache Kp-Regelung
+        if (turn < minTurnSpeed) turn = minTurnSpeed;
+        if (turn > maxTurnSpeed) turn = maxTurnSpeed;
+
+        if (!driveForward) {
+            // Rotation auf der Stelle
+            setMotorSpeed(motorLinks,  (diff > 0) ?  turn : -turn);
+            setMotorSpeed(motorRechts, (diff > 0) ? -turn :  turn);
+        } else {
+            // Vorwärts + Drehen mit motor_speed als Basis
+            int left  =  motor_speed + ((diff > 0) ?  turn : -turn);
+            int right =  motor_speed - ((diff > 0) ?  turn : -turn);
+
+            // Begrenzen auf -100…100
+            left  = (left  > 100) ? 100 : (left  < -100 ? -100 : left);
+            right = (right > 100) ? 100 : (right < -100 ? -100 : right);
+
+            setMotorSpeed(motorLinks,  left);
+            setMotorSpeed(motorRechts, right);
+        }
+
+    
+}
+
+
 
 // Main Task
 task main();
@@ -67,7 +132,11 @@ task main();
 		{
 			status = 2 // habe Ball
 
-			
+			alignToHeading( , true);
+			// werte nehmen
+			// Tor Berechnen
+			// auf Tor korregierenw
+			// ins tor fahren 	
 		}
 		else
 		{

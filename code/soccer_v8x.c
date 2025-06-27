@@ -22,7 +22,7 @@ tHTMC Kompass;
 tHTIRS2 Seeker;
 
 int status = 0;
-// Status: 0 = idle, 1 = 
+// Status: 0 = idle, 1 = suche ball, 2 = habe Ball, 
 
 // Variablen definieren
 int dribbler_speed_ini; // Ursprüngliche Dribbler Geschwindigkeit
@@ -31,6 +31,8 @@ int me_dir; // Roboter Richtung
 int ball_dir; // Ball Richtung
 int dir_diff;
 int ini_goal_dir; // Torwamnd Richtung
+int toleranz = 10;
+int motor_speed = 25;
 float goal_dir; // Tor Richtung
 float dis_r; // Ultraschall Entfernung Rechts
 float dis_l; // Ultraschall Entfernung Links
@@ -55,7 +57,45 @@ task main();
 		readSensor (&Seeker);
 		ball_dir = Seeker.acDirection
 
+		dribbler_speed = getMotorRPM(Dribbler);
 
+		Ulthinten = getUSDistance(Ult1);
+		Ultlinks = getUSDistance(Ult2);
+
+		// Main
+		if ((dribbler_speed < dribbler_speed_ini + toleranz) && (dribbler_speed > dribbler_speed_ini - toleranz))
+		{
+			status = 2 // habe Ball
+
+			
+		}
+		else
+		{
+			status = 1 // suche Ball
+
+			// Ball suchen
+			if (BallRichtung == 5)
+			{
+				setMotorSpeed(motorLinks, motor_speed);
+				setMotorSpeed(motorRechts, motor_speed);
+			}
+			else if (BallRichtung < 5) // Ball rechts
+			{
+				setMotorSpeed(motorLinks, -motor_speed);
+				setMotorSpeed(motorRechts, motor_speed);
+			}
+			else if (BallRichtung > 5) // Ball links
+			{
+				setMotorSpeed(motorLinks, motor_speed);
+				setMotorSpeed(motorRechts, -motor_speed);
+			}
+			else
+			{
+				setMotorSpeed(motorLinks, -motor_speed);
+				setMotorSpeed(motorRechts, motor_speed);
+			}
+		}
+		wait1Msec (50);
 	}
 
 }

@@ -1,2 +1,3 @@
 soccer_v8x.c | line 127-128 | Welcher Ult ist links, welcher rechts ?
 soocer_v8x.c | line 139 | Peer's Rechnungen für Torwinkel einfügen.
+soocer_v8x.c || alignToHeadingStep muss neu gamacht werden damit wir wir toggle für " zu heading fahren haben (unterwegs korrigiren), das selbe mit der ball such logik

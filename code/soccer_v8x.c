@@ -35,7 +35,7 @@ int toleranz = 10;
 int motor_speed = 25;
 float goal_dir; // Tor Richtung
 float dis_r; // Ultraschall Entfernung Rechts
-float dis_l; // Ultraschall Entfernung Links
+float dis_h; // Ultraschall Entfernung Links
 
 //---------------------------------------------------------------------------
 //  alignToHeadingStep()
@@ -49,7 +49,7 @@ float dis_l; // Ultraschall Entfernung Links
 //
 //  Die Funktion prüft KEINEN Ballbesitz – das erledigt dein Hauptcode.
 //---------------------------------------------------------------------------
-bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = 10)
+bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = toleranz)
 {
     const int maxTurnSpeed = 60;   // maximale Drehgeschwindigkeit
     const int minTurnSpeed = 10;   // minimale Drehgeschwindigkeit
@@ -124,24 +124,29 @@ task main();
 
 		dribbler_speed = getMotorRPM(Dribbler);
 
-		Ulthinten = getUSDistance(Ult1);
-		Ultlinks = getUSDistance(Ult2);
+		dis_h = getUSDistance(Ult1);
+		dis_r = getUSDistance(Ult2);
 
 		// Main
 		if ((dribbler_speed < dribbler_speed_ini + toleranz) && (dribbler_speed > dribbler_speed_ini - toleranz))
 		{
 			status = 2 // habe Ball
 
-			alignToHeadingStep(ini_goal_dir, true)
-			if alignToHeadingStep == true
+			if (me_dir == ini_goal_dir)
 			{
-
+				dis_h
+				dis_r
+				//hier Peer's Rechnung für Torwinkel einfügen
+				while (alignToHeadingStep == false)
+				{
+					alignToHeadingStep(goal_dir, false)
+				}
+				
 			}
-			else if alignToHeadingStep == false
+			else
 			{
-
+				alignToHeadingStep(ini_goal_dir, true)
 			}
-			alignToHeadingStep(ini_goal_dir, true)
 			// werte nehmen
 			// Tor Berechnen
 			// auf Tor korregierenw

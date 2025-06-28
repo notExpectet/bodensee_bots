@@ -49,7 +49,7 @@ float dis_l; // Ultraschall Entfernung Links
 //
 //  Die Funktion prüft KEINEN Ballbesitz – das erledigt dein Hauptcode.
 //---------------------------------------------------------------------------
-bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = 3)
+bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = 10)
 {
     const int maxTurnSpeed = 60;   // maximale Drehgeschwindigkeit
     const int minTurnSpeed = 10;   // minimale Drehgeschwindigkeit
@@ -132,7 +132,16 @@ task main();
 		{
 			status = 2 // habe Ball
 
-			alignToHeadingStep()
+			alignToHeadingStep(ini_goal_dir, true)
+			if alignToHeadingStep == true
+			{
+
+			}
+			else if alignToHeadingStep == false
+			{
+
+			}
+			alignToHeadingStep(ini_goal_dir, true)
 			// werte nehmen
 			// Tor Berechnen
 			// auf Tor korregierenw

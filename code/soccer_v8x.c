@@ -22,7 +22,7 @@ tHTMC Kompass;
 tHTIRS2 Seeker;
 
 int status = 0;
-// Status: 0 = idle, 1 = suche ball, 2 = habe Ball, 
+// Status: 0 = idle, 1 = suche ball, 2 = habe Ball
 
 // Variablen definieren
 int dribbler_speed_ini; // Ursprüngliche Dribbler Geschwindigkeit
@@ -33,6 +33,7 @@ int dir_diff;
 int ini_goal_dir; // Torwamnd Richtung
 int toleranz = 10;
 int motor_speed = 25;
+bool goal_final;
 float goal_dir; // Tor Richtung
 float dis_r; // Ultraschall Entfernung Rechts
 float dis_h; // Ultraschall Entfernung Links
@@ -134,6 +135,7 @@ task main();
 
 			if (me_dir == ini_goal_dir)
 			{
+				goal_final = true
 				dis_h
 				dis_r
 				//hier Peer's Rechnung für Torwinkel einfügen
@@ -155,6 +157,7 @@ task main();
 		else
 		{
 			status = 1 // suche Ball
+			goal_final = false
 
 			// Ball suchen
 			if (BallRichtung == 5)

@@ -37,70 +37,7 @@ float goal_dir; // Tor Richtung
 float dis_r; // Ultraschall Entfernung Rechts
 float dis_h; // Ultraschall Entfernung Links
 
-//---------------------------------------------------------------------------
-//  alignToHeadingStep()
-//    • targetHeading : gewünschter Winkel 0-359°
-//    • driveForward  : false = Drehung auf der Stelle
-//                      true  = während des Drehens mit motor_speed vorwärts
-//    • tol           : Winkel-Toleranz
-//
-//  Rückgabe: true  → Ziel erreicht (innerhalb tol)
-//            false → weiter ausrichten
-//
-//  Die Funktion prüft KEINEN Ballbesitz – das erledigt dein Hauptcode.
-//---------------------------------------------------------------------------
-bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = toleranz)
-{
-    const int maxTurnSpeed = 60;   // maximale Drehgeschwindigkeit
-    const int minTurnSpeed = 10;   // minimale Drehgeschwindigkeit
-
-    //------------------------ Kursregler (ein Schritt) ---------------------
-    readSensor(&Kompass);
-    int curr = Kompass.relativeHeading;          // 0-359°
-
-    // kürzesten Winkelfehler −180 … +180 berechnen
-    int diff = targetHeading - curr;
-    if (diff > 180)  diff -= 360;
-    if (diff < -180) diff += 360;
-
-    int absDiff = abs(diff);
-    if (absDiff <= tol) {                        // Ziel erreicht
-        if (driveForward) {
-            setMotorSpeed(motorLinks,  motor_speed);
-            setMotorSpeed(motorRechts, motor_speed);
-        } else {
-            setMotorSpeed(motorLinks,  0);
-            setMotorSpeed(motorRechts, 0);
-        }
-        return true;
-    }
-
-    // proportionale Drehgeschwindigkeit
-    int turn = (absDiff * maxTurnSpeed) / 180;
-    if (turn < minTurnSpeed) turn = minTurnSpeed;
-    if (turn > maxTurnSpeed) turn = maxTurnSpeed;
-
-    if (!driveForward) {
-        // Rotation auf der Stelle
-        setMotorSpeed(motorLinks,  (diff > 0) ?  turn : -turn);
-        setMotorSpeed(motorRechts, (diff > 0) ? -turn :  turn);
-    } else {
-        // Vorwärts + Differenzial-Lenkung
-        int left  =  motor_speed + ((diff > 0) ?  turn : -turn);
-        int right =  motor_speed - ((diff > 0) ?  turn : -turn);
-
-        // Begrenzen auf −100 … +100
-        left  = (left  > 100) ? 100 : (left  < -100 ? -100 : left);
-        right = (right > 100) ? 100 : (right < -100 ? -100 : right);
-
-        setMotorSpeed(motorLinks,  left);
-        setMotorSpeed(motorRechts, right);
-    }
-    return false;                                 // noch nicht im Ziel
-}
-
-
-
+void rotate_to_dir(int tar_dir, bool drive_forward)
 
 // Main Task
 task main();
@@ -137,15 +74,15 @@ task main();
 				dis_h
 				dis_r
 				//hier Peer's Rechnung für Torwinkel einfügen
-				while (alignToHeadingStep == false)
-				{
-					alignToHeadingStep(goal_dir, false)
-				}
+			
+			
+			
+			
 				
 			}
 			else
 			{
-				alignToHeadingStep(ini_goal_dir, true)
+				
 			}
 			// werte nehmen
 			// Tor Berechnen

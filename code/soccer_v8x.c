@@ -38,6 +38,17 @@ float goal_dir; // Tor Richtung
 float dis_r; // Ultraschall Entfernung Rechts
 float dis_h; // Ultraschall Entfernung Links
 
+
+
+void debugScreen()
+{
+
+}
+
+
+
+
+
 //---------------------------------------------------------------------------
 //  alignToHeadingStep()
 //    • targetHeading : gewünschter Winkel 0-359°
@@ -135,15 +146,18 @@ task main();
 
 			if (me_dir == ini_goal_dir)
 			{
-				goal_final = true
-				dis_h
-				dis_r
-				//hier Peer's Rechnung für Torwinkel einfügen
-				while (alignToHeadingStep == false)
+				// Peers Rechnung für Torwinkel
+				// Output von Peers Rechnung -> goal_dir
+				
+				if (me_dir == goal_dir)
+				{
+					setMotorSpeed(motorLinks, motor_speed);
+					setMotorSpeed(motorRechts, motor_speed);
+				}
+				else
 				{
 					alignToHeadingStep(goal_dir, false)
 				}
-				
 			}
 			else
 			{

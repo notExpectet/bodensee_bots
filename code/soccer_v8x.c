@@ -9,7 +9,7 @@
 	This code is intellectual property of Bodensee Bots j.r.t. and is not allowed to be used for commercial purposes.
 	The authors are not responsible for any damage caused by the use of this code.
 	Code created by:  Peer Siems, 2025 / Marlon Jost, 2025
-	Soccerversion 8x (under construction) test
+	Soccerversion 8x (under construction) BETA RELEASE
 */
 
 #include "hitechnic-compass.h"

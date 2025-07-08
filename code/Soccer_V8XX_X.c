@@ -9,7 +9,7 @@
 	This code is intellectual property of Bodensee Bots j.r.t. and is not allowed to be used for commercial purposes.
 	The authors are not responsible for any damage caused by the use of this code.
 	Code created by:  Peer Siems, 2025 / Marlon Jost, 2025
-	Soccerversion 8x (under construction) test
+	Soccerversion 8xxx wrong Version !!! DO NOT USE OR DISTIBUTE !!!
 */
 
 #include "hitechnic-compass.h"
@@ -26,7 +26,7 @@ int status = 0;
 
 // Variablen definieren
 int BallRichtung;
-int dribbler_speed_ini; // Ursprüngliche Dribbler Geschwindigkeit
+int dribbler_speed_ini; // UrsprÃ¼ngliche Dribbler Geschwindigkeit
 int dribbler_speed; // Dribbler Geschwindigkeit
 int me_dir; // Roboter Richtung
 int ball_dir; // Ball Richtung
@@ -40,15 +40,15 @@ float dis_h; // Ultraschall Entfernung Links
 
 //---------------------------------------------------------------------------
 //  alignToHeadingStep()
-//    • targetHeading : gewünschter Winkel 0-359°
-//    • driveForward  : false = Drehung auf der Stelle
-//                      true  = während des Drehens mit motor_speed vorwärts
-//    • tol           : Winkel-Toleranz
+//    â€¢ targetHeading : gewÃ¼nschter Winkel 0-359Â°
+//    â€¢ driveForward  : false = Drehung auf der Stelle
+//                      true  = wÃ¤hrend des Drehens mit motor_speed vorwÃ¤rts
+//    â€¢ tol           : Winkel-Toleranz
 //
-//  Rückgabe: true  ? Ziel erreicht (innerhalb tol)
+//  RÃ¼ckgabe: true  ? Ziel erreicht (innerhalb tol)
 //            false ? weiter ausrichten
 //
-//  Die Funktion prüft KEINEN Ballbesitz – das erledigt dein Hauptcode.
+//  Die Funktion prÃ¼ft KEINEN Ballbesitz â€“ das erledigt dein Hauptcode.
 //---------------------------------------------------------------------------
 bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = toleranz)
 {
@@ -57,9 +57,9 @@ bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = 
 
     //------------------------ Kursregler (ein Schritt) ---------------------
     readSensor(&Kompass);
-    int curr = Kompass.relativeHeading;          // 0-359°
+    int curr = Kompass.relativeHeading;          // 0-359Â°
 
-    // kürzesten Winkelfehler -180 … +180 berechnen
+    // kÃ¼rzesten Winkelfehler -180 â€¦ +180 berechnen
     int diff = targetHeading - curr;
     if (diff > 180)  diff -= 360;
     if (diff < -180) diff += 360;
@@ -86,11 +86,11 @@ bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = 
         setMotorSpeed(motorLinks,  (diff > 0) ?  turn : -turn);
         setMotorSpeed(motorRechts, (diff > 0) ? -turn :  turn);
     } else {
-        // Vorwärts + Differenzial-Lenkung
+        // VorwÃ¤rts + Differenzial-Lenkung
         int left  =  motor_speed + ((diff > 0) ?  turn : -turn);
         int right =  motor_speed - ((diff > 0) ?  turn : -turn);
 
-        // Begrenzen auf -100 … +100
+        // Begrenzen auf -100 â€¦ +100
         left  = (left  > 100) ? 100 : (left  < -100 ? -100 : left);
         right = (right > 100) ? 100 : (right < -100 ? -100 : right);
 
@@ -110,8 +110,8 @@ void rotate_to_dir(int tar_dir, bool drive_forward)
 // Main Task
 task main();
 {
-	setMotorSpeed(Dribbler, 100); // Ürsprünglicher Dribbler Speed
-	dribbler_speed_ini = getMotorRPM(Dribbler); // Ursprünglicher Dribbler Speed festlegen
+	setMotorSpeed(Dribbler, 100); // ÃœrsprÃ¼nglicher Dribbler Speed
+	dribbler_speed_ini = getMotorRPM(Dribbler); // UrsprÃ¼nglicher Dribbler Speed festlegen
 
 	initSensor (&Kompass, KompassPort);
 	readSensor (&Kompass);
@@ -144,7 +144,7 @@ task main();
 			{
 				dis_h;
 				dis_r;
-				//hier Peer's Rechnung für Torwinkel einfügen
+				//hier Peer's Rechnung fÃ¼r Torwinkel einfÃ¼gen
 				if (alignToHeadingStep == false)
 				{
 					alignToHeadingStep(goal_dir, false);

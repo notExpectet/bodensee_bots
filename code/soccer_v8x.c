@@ -35,6 +35,7 @@ int toleranz = 10;
 int motor_speed = 25;
 int turn_speed = ;
 bool goal_final;
+bool have_ball;
 float goal_dir; // Tor Richtung
 float dis_r; // Ultraschall Entfernung Rechts
 float dis_h; // Ultraschall Entfernung Links
@@ -140,16 +141,13 @@ task main();
 		dis_h = getUSDistance(Ult1);
 		dis_r = getUSDistance(Ult2);
 
-		// Main
-		if ((dribbler_speed < dribbler_speed_ini + toleranz) && (dribbler_speed > dribbler_speed_ini - toleranz))
-		{
-			status = 2 // habe Ball
+
 
 			if (me_dir == ini_goal_dir)
 			{
 				// Peers Rechnung für Torwinkel
 				// Output von Peers Rechnung -> goal_dir
-				
+				goal_final = false
 				if (me_dir == goal_dir)
 				{
 					setMotorSpeed(motorLinks, motor_speed);
@@ -168,11 +166,62 @@ task main();
 			// Tor Berechnen
 			// auf Tor korregierenw
 			// ins tor fahren 	
+
+
+
+
+
+
+
+
+
+
+
+
+	// Main
+	if ((dribbler_speed < dribbler_speed_ini + toleranz) && (dribbler_speed > dribbler_speed_ini - toleranz))
+	{
+		have_ball = true;
+		if (me_dir != ini_goal_dir && goal_final == false)
+		{
+			alignToHeadingStep(ini_goal_dir, true)
 		}
+		else if (me_dir == ini_goal_dir && goal_final == false)
+		{
+			goal_final = true;
+			//Peers Tangens Rechnung
+		}
+		else if (goal_final == true)
+		{
+			if (me_dir == goal_dir)
+			{
+			
+				setMotorSpeed(motorLinks, motor_speed);
+				setMotorSpeed(motorRechts, motor_speed);
+
+			}
+			else
+			{
+				alignToHeadingStep(goal_dir, false)
+			}
+
+		}
+	}
+
+
+		
+
+
+
+
+
+
+
 		else
 		{
 			status = 1 // suche Ball
-			goal_final = false
+			goal_final = false;
+			have_ball = false;
 
 			// Ball suchen
 			if (ball_dir == 5)

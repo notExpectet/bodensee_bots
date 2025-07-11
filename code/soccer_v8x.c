@@ -33,6 +33,7 @@ int dir_diff;
 int ini_goal_dir; // Torwamnd Richtung
 int toleranz = 10;
 int motor_speed = 25;
+int turn_speed = ;
 bool goal_final;
 float goal_dir; // Tor Richtung
 float dis_r; // Ultraschall Entfernung Rechts
@@ -174,20 +175,20 @@ task main();
 			goal_final = false
 
 			// Ball suchen
-			if (BallRichtung == 5)
+			if (ball_dir == 5)
 			{
 				setMotorSpeed(motorLinks, motor_speed);
 				setMotorSpeed(motorRechts, motor_speed);
 			}
-			else if (BallRichtung < 5) // Ball rechts
+			else if (ball_dir < 5) // Ball rechts
 			{
-				setMotorSpeed(motorLinks, -motor_speed);
-				setMotorSpeed(motorRechts, motor_speed);
+				setMotorSpeed(motorLinks, motor_speed / 2);
+				setMotorSpeed(motorRechts, motor_speed * 2);
 			}
-			else if (BallRichtung > 5) // Ball links
+			else if (ball_dir > 5) // Ball links
 			{
-				setMotorSpeed(motorLinks, motor_speed);
-				setMotorSpeed(motorRechts, -motor_speed);
+				setMotorSpeed(motorLinks, motor_speed * 2);
+				setMotorSpeed(motorRechts, motor_speed / 2);
 			}
 			else
 			{

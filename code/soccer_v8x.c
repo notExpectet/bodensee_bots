@@ -142,81 +142,34 @@ task main();
 		dis_r = getUSDistance(Ult2);
 
 
-
-			if (me_dir == ini_goal_dir)
+		// Main
+		if ((dribbler_speed < dribbler_speed_ini + toleranz) && (dribbler_speed > dribbler_speed_ini - toleranz))
+		{
+			have_ball = true;
+			if (me_dir != ini_goal_dir && goal_final == false)
 			{
-				// Peers Rechnung für Torwinkel
-				// Output von Peers Rechnung -> goal_dir
-				goal_final = false
+				alignToHeadingStep(ini_goal_dir, true)
+			}
+			else if (me_dir == ini_goal_dir && goal_final == false)
+			{
+				goal_final = true;
+				//Peers Tangens Rechnung
+			}
+			else if (goal_final == true)
+			{
 				if (me_dir == goal_dir)
 				{
+			
 					setMotorSpeed(motorLinks, motor_speed);
 					setMotorSpeed(motorRechts, motor_speed);
+
 				}
 				else
 				{
 					alignToHeadingStep(goal_dir, false)
 				}
-			}
-			else
-			{
-				alignToHeadingStep(ini_goal_dir, true)
-			}
-			// werte nehmen
-			// Tor Berechnen
-			// auf Tor korregierenw
-			// ins tor fahren 	
-
-
-
-
-
-
-
-
-
-
-
-
-	// Main
-	if ((dribbler_speed < dribbler_speed_ini + toleranz) && (dribbler_speed > dribbler_speed_ini - toleranz))
-	{
-		have_ball = true;
-		if (me_dir != ini_goal_dir && goal_final == false)
-		{
-			alignToHeadingStep(ini_goal_dir, true)
-		}
-		else if (me_dir == ini_goal_dir && goal_final == false)
-		{
-			goal_final = true;
-			//Peers Tangens Rechnung
-		}
-		else if (goal_final == true)
-		{
-			if (me_dir == goal_dir)
-			{
-			
-				setMotorSpeed(motorLinks, motor_speed);
-				setMotorSpeed(motorRechts, motor_speed);
-
-			}
-			else
-			{
-				alignToHeadingStep(goal_dir, false)
-			}
 
 		}
-	}
-
-
-		
-
-
-
-
-
-
-
 		else
 		{
 			status = 1 // suche Ball

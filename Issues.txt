@@ -1,3 +1,12 @@
-soccer_v8x.c | line 127-128 | Welcher Ult ist links, welcher rechts ?
-soocer_v8x.c | line 139 | Peer's Rechnungen für Torwinkel einfügen.
-soocer_v8x.c || alignToHeadingStep muss neu gamacht werden damit wir wir toggle für " zu heading fahren haben (unterwegs korrigiren), das selbe mit der ball such logik
+### Offene Issues
+- soccer_v8x.c | line 127-128 | Welcher Ult ist links, welcher rechts?
+- soccer_v8x.c | line 139 | Peer's Rechnungen für Torwinkel einfügen.
+- soccer_v8x.c | alignToHeadingStep muss neu gemacht werden damit wir einen Toggle für "zu heading" fahren haben (unterwegs korrigieren); dasselbe gilt für die Ball-Such-Logik.
+
+### Erledigte/irrelevante Issues
+- soccer_v8x.c | line 36  | fehlende Initialisierung von turn_speed (behoben)
+- soccer_v8x.c | line 120 | Semikolon hinter 'task main' entfernen (behoben)
+- soccer_v8x.c | line 137 | Semikolon nach Zuweisung von ball_dir fehlt (behoben)
+- soccer_v8x.c | line 151 | Semikolon hinter Funktionsaufruf alignToHeadingStep fehlt (behoben)
+- soccer_v8x.c | line 169 | Semikolon hinter Funktionsaufruf alignToHeadingStep fehlt (behoben)
+- soccer_v8x.c | line 175 | Semikolon nach status-Zuweisung fehlt (behoben)

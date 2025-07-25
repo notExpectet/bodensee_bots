@@ -1,5 +1,5 @@
-#pragma config(Sensor, S1,     Ult1,           sensorEV3_Ultrasonic)
-#pragma config(Sensor, S2,     Ult2,           sensorEV3_Ultrasonic)
+#pragma config(Sensor, S1,     UltLinks,       sensorEV3_Ultrasonic) // linker Ultraschallsensor
+#pragma config(Sensor, S2,     UltRechts,      sensorEV3_Ultrasonic) // rechter Ultraschallsensor
 #pragma config(Motor,  motorA,          motorLinks,    tmotorEV3_Large, PIDControl, reversed, encoder)
 #pragma config(Motor,  motorB,          Dribbler,      tmotorEV3_Medium, PIDControl, encoder)
 #pragma config(Motor,  motorD,          motorRechts,   tmotorEV3_Large, PIDControl, reversed, encoder)
@@ -30,21 +30,26 @@ int dribbler_speed; // Dribbler Geschwindigkeit
 int me_dir; // Roboter Richtung
 int ball_dir; // Ball Richtung
 int dir_diff;
-int ini_goal_dir; // Torwamnd Richtung
+int ini_goal_dir; // Torwand Richtung
 int toleranz = 10;
 int motor_speed = 25;
-int turn_speed = ;
+int turn_speed = 0;
 bool goal_final;
 bool have_ball;
 float goal_dir; // Tor Richtung
-float dis_r; // Ultraschall Entfernung Rechts
-float dis_h; // Ultraschall Entfernung Links
+float dis_right; // Ultraschall Entfernung rechts
+float dis_left;  // Ultraschall Entfernung links
 
 
 
 void debugScreen()
 {
-
+eraseDisplay();
+displayBigTextLine(0, "Dir:%3d", me_dir);
+displayBigTextLine(2, "Ball:%3d", ball_dir);
+displayBigTextLine(4, "UL:%3.0f UR:%3.0f", dis_left, dis_right);
+displayBigTextLine(6, "Goal:%3.0f", goal_dir);
+displayBigTextLine(8, "Status:%d", status);
 }
 
 
@@ -117,29 +122,36 @@ bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = 
 
 
 // Main Task
-task main();
+task main()
 {
 	setMotorSpeed(Dribbler, 100); // Ürsprünglicher Dribbler Speed
 	dribbler_speed_ini = getMotorRPM(Dribbler); // Ursprünglicher Dribbler Speed festlegen
 	
-	initSensor (&Kompass, KompassPort);
-	readSensor (&Kompass);
-	ini_goal_dir = Kompass.heading;
-	Kompass.offset = goal_dir;
+        initSensor(&Kompass, KompassPort);
+        initSensor(&Seeker, SeekerPort);
+
+        readSensor(&Kompass);
+        ini_goal_dir = Kompass.heading;
+        Kompass.offset = ini_goal_dir; // Nullpunkt auf Tor ausrichten
+
+        goal_final = false;
+        have_ball  = false;
 
 	while (true)
 	{
 		// Sensoren Auslesen
-		readSensor(&Kompass);
-		me_dir = Kompass.relativeHeading;
+                readSensor(&Kompass);
+                me_dir = Kompass.relativeHeading;
 
-		readSensor (&Seeker);
-		ball_dir = Seeker.acDirection
+                readSensor (&Seeker);
+                ball_dir = Seeker.acDirection;
 
 		dribbler_speed = getMotorRPM(Dribbler);
 
-		dis_h = getUSDistance(Ult1);
-		dis_r = getUSDistance(Ult2);
+            dis_left  = getUSDistance(UltLinks);
+            dis_right = getUSDistance(UltRechts);
+
+            debugScreen();
 
 
 		// Main
@@ -148,13 +160,21 @@ task main();
 			have_ball = true;
 			if (me_dir != ini_goal_dir && goal_final == false)
 			{
-				alignToHeadingStep(ini_goal_dir, true)
+				alignToHeadingStep(ini_goal_dir, true);
 			}
-			else if (me_dir == ini_goal_dir && goal_final == false)
-			{
-				goal_final = true;
-				//Peers Tangens Rechnung
-			}
+                        else if (me_dir == ini_goal_dir && goal_final == false)
+                        {
+                                // Peers Tangens Rechnung
+                                if (dis_left < 50)
+                                {
+                                        goal_dir = atan2(50 - dis_left, 170 - dis_right);
+                                }
+                                else
+                                {
+                                        goal_dir = -atan2(dis_left - 50, 170 - dis_right);
+                                }
+                                goal_final = true;
+                        }
 			else if (goal_final == true)
 			{
 				if (me_dir == goal_dir)
@@ -166,13 +186,13 @@ task main();
 				}
 				else
 				{
-					alignToHeadingStep(goal_dir, false)
+					alignToHeadingStep(goal_dir, false);
 				}
 
 		}
 		else
 		{
-			status = 1 // suche Ball
+			status = 1; // suche Ball
 			goal_final = false;
 			have_ball = false;
 

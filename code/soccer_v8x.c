@@ -33,7 +33,7 @@ int dir_diff;
 int ini_goal_dir; // Torwamnd Richtung
 int toleranz = 10;
 int motor_speed = 25;
-int turn_speed = ;
+int turn_speed = 0;
 bool goal_final;
 bool have_ball;
 float goal_dir; // Tor Richtung
@@ -117,7 +117,7 @@ bool alignToHeadingStep(int targetHeading, bool driveForward = false, int tol = 
 
 
 // Main Task
-task main();
+task main()
 {
 	setMotorSpeed(Dribbler, 100); // Ürsprünglicher Dribbler Speed
 	dribbler_speed_ini = getMotorRPM(Dribbler); // Ursprünglicher Dribbler Speed festlegen
@@ -134,7 +134,7 @@ task main();
 		me_dir = Kompass.relativeHeading;
 
 		readSensor (&Seeker);
-		ball_dir = Seeker.acDirection
+		ball_dir = Seeker.acDirection;
 
 		dribbler_speed = getMotorRPM(Dribbler);
 
@@ -148,7 +148,7 @@ task main();
 			have_ball = true;
 			if (me_dir != ini_goal_dir && goal_final == false)
 			{
-				alignToHeadingStep(ini_goal_dir, true)
+				alignToHeadingStep(ini_goal_dir, true);
 			}
 			else if (me_dir == ini_goal_dir && goal_final == false)
 			{
@@ -166,13 +166,13 @@ task main();
 				}
 				else
 				{
-					alignToHeadingStep(goal_dir, false)
+					alignToHeadingStep(goal_dir, false);
 				}
 
 		}
 		else
 		{
-			status = 1 // suche Ball
+			status = 1; // suche Ball
 			goal_final = false;
 			have_ball = false;
 

@@ -30,7 +30,7 @@ int dribbler_speed; // Dribbler Geschwindigkeit
 int me_dir; // Roboter Richtung
 int ball_dir; // Ball Richtung
 int dir_diff;
-int ini_goal_dir; // Torwamnd Richtung
+int ini_goal_dir; // Torwand Richtung
 int toleranz = 10;
 int motor_speed = 25;
 int turn_speed = 0;

@@ -1,7 +1,11 @@
 ### Offene Issues
 - soccer_v8x.c | line 139 | Peer's Rechnungen für Torwinkel einfügen.
 - soccer_v8x.c | alignToHeadingStep muss neu gemacht werden damit wir einen Toggle für "zu heading" fahren haben (unterwegs korrigieren); dasselbe gilt für die Ball-Such-Logik.
-
+- soccer_v8x.c | line 125 | IR-Seeker wird nicht mit initSensor initialisiert.
+- soccer_v8x.c | line 128 | goal_dir wird vor der Berechnung als Offset genutzt.
+- soccer_v8x.c | line 155 | goal_dir aus Ultraschallmessungen berechnen (Peers Tangens-Rechnung).
+- soccer_v8x.c | fehlende Initialisierung von goal_final und have_ball zu Beginn.
+- soccer_v8x.c | debugScreen ist leer und sollte Statusinfos anzeigen.
 
 
 ### Erledigte/irrelevante Issues
@@ -12,3 +16,4 @@
 - soccer_v8x.c | line 169 | Semikolon hinter Funktionsaufruf alignToHeadingStep fehlt (behoben)
 - soccer_v8x.c | line 175 | Semikolon nach status-Zuweisung fehlt (behoben)
 - soccer_v8x.c | line 127-128 | Welcher Ult ist links, welcher rechts?
+

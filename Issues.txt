@@ -1,6 +1,7 @@
 ### Offene Issues
 - soccer_v8x.c | alignToHeadingStep muss neu gemacht werden damit wir einen Toggle für "zu heading" fahren haben (unterwegs korrigieren); dasselbe gilt für die Ball-Such-Logik.
 
+
 ### Erledigte/irrelevante Issues
 - soccer_v8x.c | line 36  | fehlende Initialisierung von turn_speed (behoben)
 - soccer_v8x.c | line 120 | Semikolon hinter 'task main' entfernen (behoben)

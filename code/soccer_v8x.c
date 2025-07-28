@@ -162,19 +162,19 @@ task main()
 			{
 				alignToHeadingStep(ini_goal_dir, true);
 			}
-                        else if (me_dir == ini_goal_dir && goal_final == false)
-                        {
-                                // Peers Tangens Rechnung
-                                if (dis_left < 50)
-                                {
-                                        goal_dir = atan2(50 - dis_left, 170 - dis_right);
-                                }
-                                else
-                                {
-                                        goal_dir = -atan2(dis_left - 50, 170 - dis_right);
-                                }
-                                goal_final = true;
-                        }
+            else if (me_dir == ini_goal_dir && goal_final == false)
+            {
+            // Peers Tangens Rechnung
+                if (dis_left < 50)
+                {
+                    goal_dir = atan2(50 - dis_left, 170 - dis_right);
+                }
+                else
+                {
+                    goal_dir = -atan2(dis_left - 50, 170 - dis_right);
+                }
+                goal_final = true;
+            }
 			else if (goal_final == true)
 			{
 				if (me_dir == goal_dir)
@@ -187,7 +187,8 @@ task main()
 				else
 				{
 					alignToHeadingStep(goal_dir, false);
-				}
+                }
+            }
 
 		}
 		else

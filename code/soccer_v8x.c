@@ -155,7 +155,7 @@ task main()
 
 
 		// Main
-		if ((dribbler_speed < dribbler_speed_ini + toleranz) || (dribbler_speed > dribbler_speed_ini - toleranz))
+		if ((dribbler_speed < dribbler_speed_ini + toleranz) && (dribbler_speed > dribbler_speed_ini - toleranz))
 		{
 			have_ball = true;
 			if (me_dir != ini_goal_dir && goal_final == false)

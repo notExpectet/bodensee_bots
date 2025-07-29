@@ -37,7 +37,7 @@ int turn_speed = 0;
 bool goal_final;
 bool have_ball;
 float goal_dir; // Tor Richtung
-float dis_right; // Ultraschall Entfernung rechts
+float dis_front; // Ultraschall Entfernung rechts
 float dis_left;	 // Ultraschall Entfernung links
 
 

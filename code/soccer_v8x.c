@@ -1,5 +1,5 @@
 #pragma config(Sensor, S1,		 UltLinks,			 sensorEV3_Ultrasonic) // linker Ultraschallsensor
-#pragma config(Sensor, S2,		 UltRechts,			 sensorEV3_Ultrasonic) // rechter Ultraschallsensor
+#pragma config(Sensor, S2,		 UltFront,			 sensorEV3_Ultrasonic) // vorderer Ultraschallsensor
 #pragma config(Motor,	 motorA,					motorLinks,		 tmotorEV3_Large, PIDControl, reversed, encoder)
 #pragma config(Motor,	 motorB,					Dribbler,			 tmotorEV3_Medium, PIDControl, encoder)
 #pragma config(Motor,	 motorD,					motorRechts,	 tmotorEV3_Large, PIDControl, reversed, encoder)
@@ -37,7 +37,7 @@ int turn_speed = 0;
 bool goal_final;
 bool have_ball;
 float goal_dir; // Tor Richtung
-float dis_front; // Ultraschall Entfernung rechts
+float dis_front; // Ultraschall Entfernung vorne
 float dis_left;	 // Ultraschall Entfernung links
 
 
@@ -47,7 +47,7 @@ void debugScreen()
 	eraseDisplay();
 	displayBigTextLine(0, "Dir:%3d", me_dir);
 	displayBigTextLine(2, "Ball:%3d", ball_dir);
-	displayBigTextLine(4, "UL:%3.0f UR:%3.0f", dis_left, dis_right);
+	displayBigTextLine(4, "UL:%3.0f UF:%3.0f", dis_left, dis_front);
 	displayBigTextLine(6, "Goal:%3.0f", goal_dir);
 	displayBigTextLine(8, "Habe Ball?:%d", have_ball);
 	displayBigTextLine(10, "ds:%d",dribbler_speed)
@@ -149,7 +149,7 @@ task main()
 		dribbler_speed = getMotorRPM(Dribbler);
 
 		dis_left	= getUSDistance(UltLinks);
-		dis_right = getUSDistance(UltRechts);
+		dis_front = getUSDistance(UltFront);
 
 		debugScreen();
 
@@ -164,16 +164,16 @@ task main()
 			}
 			else if (me_dir == ini_goal_dir && goal_final == false)
 			{
-				// Peers Tangens Rechnung
-				if (dis_left < 50)
-				{
-					goal_dir = atan2(50 - dis_left, 170 - dis_right);
-				}
-				else
-				{
-					goal_dir = -atan2(dis_left - 50, 170 - dis_right);
-				}
-				goal_final = true;
+                               // Angepasste Tangens-Rechnung mit Frontsensor
+                               if (dis_left < 50)
+                               {
+                                       goal_dir = atan2(50 - dis_left, dis_front);
+                               }
+                               else
+                               {
+                                       goal_dir = -atan2(dis_left - 50, dis_front);
+                               }
+                               goal_final = true;
 			}
 			else if (goal_final == true)
 			{

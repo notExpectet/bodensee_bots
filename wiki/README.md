@@ -21,7 +21,7 @@ Im Ordner `code` befinden sich mehrere Entwicklungsstände. Die aktuell funktion
 
 - **`soccer_v7.c` – Soccerversion 7.0 STABLE RELEASE**
 
-Das aktuellste Experiment befindet sich in `soccer_v8x.c` (Beta). Diese Version wurde zuletzt mit Commit `c9a520a` aktualisiert und enthält die neueste Logik, ist jedoch noch in der Erprobung.
+Das aktuellste Experiment befindet sich in `soccer_v8x.c` (Beta). Diese Version wurde zuletzt mit Commit `2a4d457` aktualisiert und enthält die neueste Logik, ist jedoch noch in der Erprobung.
 
 ## Verwendung
 

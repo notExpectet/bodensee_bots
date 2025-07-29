@@ -15,5 +15,3 @@
 - soccer_v8x.c | line 128 | goal_dir wird vor der Berechnung als Offset genutzt. (behoben)
 - soccer_v8x.c | line 155 | goal_dir aus Ultraschallmessungen berechnen (Peers Tangens-Rechnung). (behoben)
 - soccer_v8x.c | fehlende Initialisierung von goal_final und have_ball zu Beginn. (behoben)
-- soccer_v8x.c | debugScreen ist leer und sollte Statusinfos anzeigen. (behoben)
-

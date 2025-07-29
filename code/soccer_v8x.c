@@ -33,7 +33,9 @@ int dir_diff;
 int ini_goal_dir; // Torwand Richtung
 int toleranz = 20;
 int motor_speed = 25;
+
 int turn_speed = 0;
+
 bool goal_final;
 bool have_ball;
 float goal_dir; // Tor Richtung

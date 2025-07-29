@@ -11,7 +11,7 @@ Diese Wiki liefert einen kurzen Überblick über den Roboter und die Software.
   - `Dribbler` (Port B) – EV3 Medium Motor
 - **Sensoren**
   - `Ult1` (Port S1) – Ultrasonic Sensor links
-  - `Ult2` (Port S2) – Ultrasonic Sensor rechts
+  - `Ult2` (Port S2) – Ultrasonic Sensor vorne
   - `Seeker` (Port S3) – HiTechnic IR Seeker
   - `Kompass` (Port S4) – HiTechnic Compass
 

@@ -15,6 +15,12 @@ Diese Wiki liefert einen kurzen Überblick über den Roboter und die Software.
   - `Seeker` (Port S3) – HiTechnic IR Seeker
   - `Kompass` (Port S4) – HiTechnic Compass
 
+## Spielfeld-Abmessungen
+
+Unser Testfeld misst **180&nbsp;cm** von Torwand zu Torwand und
+**120&nbsp;cm** von Seitenwand zu Seitenwand. Diese Werte werden in der
+Tangenberechnung der Version `soccer_v8x.c` verwendet.
+
 ## Code-Versionen
 
 Im Ordner `code` befinden sich mehrere Entwicklungsstände. Die aktuell funktionsfähige Version ist:

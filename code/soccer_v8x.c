@@ -21,6 +21,10 @@ Soccerversion 8x (under construction) BETA RELEASE
 tHTMC Kompass;
 tHTIRS2 Seeker;
 
+// Spielfeldabmessungen in Zentimetern
+#define FIELD_LENGTH 180
+#define FIELD_WIDTH  120
+
 int status = 0;
 // Status: 0 = idle, 1 = suche ball, 2 = habe Ball
 
@@ -164,14 +168,16 @@ task main()
 			}
 			else if (me_dir == ini_goal_dir && goal_final == false)
 			{
-                               // Angepasste Tangens-Rechnung mit Frontsensor
-                               if (dis_left < 50)
+                               // Tangens-Rechnung an neue Feldgröße angepasst
+                               if (dis_left < FIELD_WIDTH / 2)
                                {
-                                       goal_dir = atan2(50 - dis_left, dis_front);
+                                       goal_dir = atan2((FIELD_WIDTH / 2) - dis_left,
+                                                        FIELD_LENGTH - dis_front);
                                }
                                else
                                {
-                                       goal_dir = -atan2(dis_left - 50, dis_front);
+                                       goal_dir = -atan2(dis_left - (FIELD_WIDTH / 2),
+                                                         FIELD_LENGTH - dis_front);
                                }
                                goal_final = true;
 			}

@@ -7,9 +7,8 @@
 
 // This code is intellectual property of Bodensee Bots j.r.t. and is not allowed to be used for commercial purposes.
 // The authors are not responsible for any damage caused by the use of this code.
-//This code may be used for educational Purposes
 // Code created by:  Peer Siems, 2025 / Marlon Jost, 2025
-// Soccerversion 7.0 STABLE RELEASE
+// Soccerversion 7.0 STABLE RELEASE (Basisversion)
 
 #include "hitechnic-compass.h"
 #include "hitechnic-irseeker-v2.h"
@@ -216,3 +215,4 @@ task main();
 	}
 
 }
+

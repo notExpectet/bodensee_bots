@@ -107,7 +107,8 @@ task main();
 	setMotorSpeed (motorLinks, 40);
 	setMotorSpeed (motorRechts, 40);
 	wait1Msec(800);
-
+	DribblerS = getMotorRPM(Dribbler);
+	DribblerSpeedBall = (DribblerS*0.95);
 	// Senorinitialisierung
 	initSensor (&Kompass, KompassPort);
 	readSensor (&Kompass);
@@ -133,7 +134,7 @@ task main();
 
 		DribblerS = getMotorRPM(Dribbler);
 		
-		DribblerSpeedBall = (DribblerS*0.95)
+
 			
 		Ulthinten = getUSDistance(Ult1);
 		Ultlinks = getUSDistance(Ult2);
@@ -147,7 +148,7 @@ task main();
 		if ((BallDa == true) && (TorOK == false)) displayBigTextLine (10, "Pos. best.   ");
 		if ((BallDa == true) && (TorOK == true )) displayBigTextLine (10, "fahre zum Tor");
 
-		if ((dribbler_speed < 250) && (dribbler_speed > 150))
+		if ((dribbler_speed < DribblerSpeedBall) && (dribbler_speed > 150))
 		{
 			status = 1; // habe Ball
 		}
@@ -158,7 +159,7 @@ task main();
 
 
 
-		if ((DribblerS < 200) && (DribblerS > 150))
+		if ((DribblerS <= DribblerSpeedBall) && (DribblerS > 150))
 		{
 			BallDa = true;
 		}
@@ -176,6 +177,7 @@ task main();
 
 		if ((BallDa == true) && (TorOK == true))
 		{
+			
 			if (Ult1 < 100/2)
 			{
 				TorFinalRichtung = -atan2(100/2-Ult1, 170-Ult2);

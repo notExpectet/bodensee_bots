@@ -27,7 +27,7 @@ int dribbler_speed = 0;
 int dribbler_speed_ini = 0;
 
 int DribblerS;
-
+int DribblerSpeedBall
 long TorRichtung;
 long Abweichung;
 long BallRichtung;
@@ -125,12 +125,16 @@ task main();
 		//Sensorwerte auslesen
 		readSensor (&Kompass);
 		Abweichung = Kompass.relativeHeading;
-
+		
+		
+		
 		readSensor (&Seeker);
 		BallRichtung = Seeker.acDirection;
 
 		DribblerS = getMotorRPM(Dribbler);
-
+		
+		DribblerSpeedBall = (DribblerS*0.95)
+			
 		Ulthinten = getUSDistance(Ult1);
 		Ultlinks = getUSDistance(Ult2);
 		//Sensorwerte anzeigen
@@ -219,4 +223,5 @@ task main();
 	}
 
 }
+
 

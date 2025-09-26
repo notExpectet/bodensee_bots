@@ -7,7 +7,7 @@
 
 #include "hitechnic-compass.h"
 #include "hitechnic-irseeker-v2.h"
-
+// test12
 #define SeekerPort S3
 #define KompassPort S4
 

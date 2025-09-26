@@ -48,22 +48,22 @@ void TorFinal()
 	{
 		setMotorSpeed(motorLinks, 20);
 		setMotorSpeed(motorRechts, 20);
-		wait1Msec(20);
+		wait1Msec(5000);
 		TorOK = true;
 	}
 
 
 	if (Abweichung < TorFinalRichtung - 5)
 	{
-		setMotorSpeed(motorLinks, 0);
-		setMotorSpeed(motorRechts, 0);
+		setMotorSpeed(motorLinks, -10);
+		setMotorSpeed(motorRechts, 10);
 		TorOK = false;
 	}
 
 	if (Abweichung > TorFinalRichtung + 5)
 	{
-		setMotorSpeed(motorLinks, 0);
-		setMotorSpeed(motorRechts, 0);
+		setMotorSpeed(motorLinks, 10);
+		setMotorSpeed(motorRechts, -10);
 		TorOK = false;
 	}
 
@@ -126,16 +126,16 @@ task main();
 		//Sensorwerte auslesen
 		readSensor (&Kompass);
 		Abweichung = Kompass.relativeHeading;
-		
-		
-		
+
+
+
 		readSensor (&Seeker);
 		BallRichtung = Seeker.acDirection;
 
 		DribblerS = getMotorRPM(Dribbler);
-		
 
-			
+
+
 		Ulthinten = getUSDistance(Ult1);
 		Ultlinks = getUSDistance(Ult2);
 		//Sensorwerte anzeigen
@@ -147,6 +147,8 @@ task main();
 		if ( BallDa == false) displayBigTextLine (10, "Ballsuche    ");
 		if ((BallDa == true) && (TorOK == false)) displayBigTextLine (10, "Pos. best.   ");
 		if ((BallDa == true) && (TorOK == true )) displayBigTextLine (10, "fahre zum Tor");
+		displayBigTextLine (12, "Tor :%d", TorFinalRichtung);
+
 
 		if ((dribbler_speed < DribblerSpeedBall) && (dribbler_speed > 150))
 		{
@@ -177,18 +179,25 @@ task main();
 
 		if ((BallDa == true) && (TorOK == true))
 		{
-			
-			if (Ult1 < 100/2)
-			{
-				TorFinalRichtung = -atan2(100/2-Ult1, 170-Ult2);
-			}
-			else if (Ult1 > 100/2)
-			{
-				TorFinalRichtung = atan2(Ult1-100/2, 170-Ult2);
-			}
+    // Berechne Spielfeldposition basierend auf US-Sensoren
+    float roboX = 100.0 - UltLinks;     // Position von links
+    float roboY = 170.0 - UltHinten;     // Position von unten
 
-			TorFinal();
+    // Richtung zum Tor (Mitte unten)
+    float dx = 50.0 - roboX;
+    float dy = 0.0 - roboY;
+
+    // Winkel zur Torwand berechnen in Grad
+    TorFinalRichtung = atan2(dx, dy) * 180.0 / PI;
+
+    // Optional: Umwandlung in Bereich -180 bis 180 Grad
+    if (TorFinalRichtung > 180) TorFinalRichtung -= 360;
+    if (TorFinalRichtung < -180) TorFinalRichtung += 360;
+
+    // Jetzt dreht sich der Roboter dahin
+    TorFinal();
 		}
+
 
 		if (BallDa == false)
 		{
@@ -225,5 +234,3 @@ task main();
 	}
 
 }
-
-

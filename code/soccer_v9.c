@@ -9,7 +9,7 @@
 // The authors are not responsible for any damage caused by the use of this code.
 //This code may be used for educational Purposes
 // Code created by:  Peer Siems, 2025 / Marlon Jost, 2025
-// Soccerversion 7.1 STABLE RELEASE
+// Soccerversion 9 STABLE RELEASE
 
 #include "hitechnic-compass.h"
 #include "hitechnic-irseeker-v2.h"
@@ -293,3 +293,4 @@ task main()
 
 
 }
+
